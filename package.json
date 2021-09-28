@@ -1,0 +1,8 @@
+{
+  "name": "backendlistenkeyboard",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:BuiTrongPhong/BackendListenKeyboard.git",
+  "author": "Bui Trong Phong <buitrongphongml@gmail.com>",
+  "license": "MIT"
+}
