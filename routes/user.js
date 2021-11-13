@@ -6,6 +6,12 @@ const {validateBody, validateParam, schemas} = require('../middleware/validateRo
 router.route('/')
     .get(UserController.index)
     .post(validateBody(schemas.userSchema), UserController.createUser)
+router.route('/signup')
+    .post(validateBody(schemas.authorSingUpSchema), UserController.signUp)
+router.route('/signin')
+    .post(validateBody(schemas.authorSingInSchema), UserController.signIn)
+router.route('/secret')
+    .get(UserController.secret)
 router.route('/:userId')
     .get(validateParam(schemas.idSchema, 'userId'), UserController.getUser)
     .put(validateParam(schemas.idSchema, 'userId'), validateBody(schemas.userSchema), UserController.replaceUser)
@@ -14,4 +20,5 @@ router.route('/:userId')
 router.route('/:userId/audios')
     .get(validateParam(schemas.idSchema, 'userId'), UserController.getUserAudio)
     .post(validateParam(schemas.idSchema, 'userId'), validateBody(schemas.audioSchema), UserController.createUserAudio)
+
 module.exports = router

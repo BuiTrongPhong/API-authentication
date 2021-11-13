@@ -1,28 +1,32 @@
+
 const express = require('express')
 const logger = require('morgan')
 const userRoute = require('./routes/user.js')
 const audioRoute = require('./routes/audio.js')
 const mongoose = require('mongoose')
 const helmet = require('helmet')
-const bodyParser = require('body-parser')
 const { route } = require('./routes/user.js')
 // setup connect mongodb by mongoose 
 
-mongoose.connect('mongodb://localhost/listenkeyboard')
+mongoose.connect('mongodb://localhost/listenkeyboard1')
     .then(() => console.log('connected to mogodb'))
     .catch((error) => console.error(`connnect is failed with error which is :${error}`))
 const app = express()
 app.use(helmet())
+
+
 // middleware
 app.use(logger('dev'))
-app.use(bodyParser.json())
+app.use(express.json())
 //routes
 app.get('/', (req, res, next) => {
+    
     return res.status(200).json({
         message: 'home'
     })
 })
 app.use('/users',userRoute)
+    
 app.use('/audios',audioRoute)
 //error
 app.use((req, res, next) => {

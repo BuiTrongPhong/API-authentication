@@ -32,6 +32,15 @@ const schemas = {
     idSchema: Joi.object().keys({
         param: Joi.string().regex(/^[0-9a-fA-F]{24}$/).required()
     }),
+    authorSingUpSchema: Joi.object().keys({
+        userName: Joi.string().required(),
+        email: Joi.string().email().required(),
+        password: Joi.string().required()
+    }),
+    authorSingInSchema: Joi.object().keys({
+        email: Joi.string().email().required(),
+        password: Joi.string().required()
+    }),
     userSchema: Joi.object().keys({
         userName: Joi.string().required(),
         email: Joi.string().email().required(),

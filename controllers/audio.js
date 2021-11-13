@@ -3,7 +3,9 @@ const Audio = require('../models/Audio')
 
 const index = async (req, res, next) => {
     try {
+        res.header("Access-Control-Allow-Origin", "*")
         const audios = await Audio.find()
+        console.log('a', res)
         return res.status(200).json({audios})
     } catch (error) {
         next(error)
