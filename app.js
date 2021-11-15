@@ -1,4 +1,4 @@
-
+require('dotenv').config()
 const express = require('express')
 const logger = require('morgan')
 const userRoute = require('./routes/user.js')
@@ -7,13 +7,14 @@ const mongoose = require('mongoose')
 const helmet = require('helmet')
 const { route } = require('./routes/user.js')
 // setup connect mongodb by mongoose 
+const passport = require('passport')
 
 mongoose.connect('mongodb://localhost/listenkeyboard1')
     .then(() => console.log('connected to mogodb'))
     .catch((error) => console.error(`connnect is failed with error which is :${error}`))
 const app = express()
 app.use(helmet())
-
+app.use(passport.initialize())
 
 // middleware
 app.use(logger('dev'))
@@ -41,7 +42,7 @@ app.use((err, req, res, next) => {
     //response to client
     return res.status(status).json({
         error: {
-            message: error.message
+            message: error.toString()
         }
     })
 })

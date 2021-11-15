@@ -1,10 +1,11 @@
-require('dotenv').config()
+
 const User = require('../models/User')
 const Audio = require('../models/Audio')
 const Joi = require('joi')
 const { findOne } = require('../models/User')
 const jwt = require('jsonwebtoken')
 const { JWT_SECRET } = require('../configs/index')
+
 const encodeToken = (userId) => {
     return  jwt.sign({
         iss: 'Phong',
@@ -65,7 +66,7 @@ const createUser = async (req, res, next) => {
         await newUser.save()
         return res.status(201).json(newUser)
     } catch (error) {
-        next(error)
+        next(error) 
     }
 }
 const deleteUser = async (req, res, next) => {
@@ -136,7 +137,9 @@ const createUserAudio = async (req, res, next) => {
 
 }
 const signIn = async (req, res, next) => {
-    console.log('signin')
+    const token = encodeToken(req.user._id)
+    res.setHeader('Authorization', token)
+    res.status(200).json({susses: true})
 }
 const signUp = async (req, res, next) => {
     try {
@@ -147,14 +150,14 @@ const signUp = async (req, res, next) => {
         const newUser = new User(req.value.body)
         newUser.save()
         const token = encodeToken(newUser._id)
-        res.setHeader('authentication', token)
+        res.setHeader('Authorization', token)
         return res.status(201).json('successful')
 
     } catch (error) {
         next(error)
     }
 }
-const secret = async (req, res, next) => {
+const secret = async () => {
     console.log('secret')
 }
 module.exports = { index, createUser, deleteUser, getUser, replaceUser, updateUser, getUserAudio, createUserAudio, signIn, signUp, secret }
